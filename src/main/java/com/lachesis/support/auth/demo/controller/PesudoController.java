@@ -1,5 +1,6 @@
 package com.lachesis.support.auth.demo.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -12,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lachesis.support.auth.demo.vo.Greeting;
+import com.lachesis.support.auth.demo.vo.SimpleUserVo;
 
 @RestController
 @RequestMapping("/greetings")
@@ -24,21 +29,43 @@ public class PesudoController {
 		
 		String token = determineToken(request);
 		String ip = determineIpAddress(request);
+		String url = determineUrlToRequest(token, ip);
 		
 		Map<String,String> vars = new HashMap<String,String>();
-		vars.put("token", token);
-		vars.put("ip", ip);
+		//vars.put("token", token);
+		//vars.put("ip", ip);
 		
 		RestTemplate  restTemplate = new RestTemplate();
 		
-		String result = restTemplate.getForObject(
-		        "http://localhost:9090/authcenter/v1/authentication", String.class, vars);
+		String result = restTemplate.getForObject(url, String.class, vars);
 		
-		
-		System.out.println("RESULT:"+result);
+		SimpleUserVo vo = convertToObject(result);
 		
 		String owner = "dummy";
+		if(vo != null){
+			owner = vo.getUsername();
+		}
 		return createNewGreeting(toName, owner);
+	}
+	
+	private SimpleUserVo convertToObject(String json){
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			SimpleUserVo vo = mapper.readValue(json, SimpleUserVo.class);
+			return vo;
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	private String determineUrlToRequest(String token, String ip){
+		return String.format("http://localhost:9090/authcenter/v1/auth?token=%s&&ip=%s", token, ip);
 	}
 	
 	private String determineToken(HttpServletRequest request){
