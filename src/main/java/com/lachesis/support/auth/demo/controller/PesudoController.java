@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -36,9 +37,15 @@ public class PesudoController {
 		//vars.put("ip", ip);
 		
 		RestTemplate  restTemplate = new RestTemplate();
-		
-		String result = restTemplate.getForObject(url, String.class, vars);
-		
+		String result = "";
+		try{
+			result = restTemplate.getForObject(url, String.class, vars);
+		}catch(HttpClientErrorException ex){
+			System.out.println(ex.getMessage());
+			System.out.println(ex.getResponseBodyAsString());
+			System.out.println(ex.getStatusCode());
+			System.out.println(ex.getStatusText());
+		}
 		SimpleUserVo vo = convertToObject(result);
 		
 		String owner = "dummy";
