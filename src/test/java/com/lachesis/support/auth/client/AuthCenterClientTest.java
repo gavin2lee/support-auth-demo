@@ -1,14 +1,14 @@
 package com.lachesis.support.auth.client;
 
-import static org.junit.Assert.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
+@Ignore
 public class AuthCenterClientTest {
 
 	@Before
