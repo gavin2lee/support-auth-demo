@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,7 +77,7 @@ public class PesudoController {
 	}
 	
 	private String determineToken(HttpServletRequest request){
-		String authrization = request.getHeader("Authorization");
+		String authrization = request.getHeader(HttpHeaders.AUTHORIZATION);
 		String token = authrization.substring(6);
 		
 		return token;
