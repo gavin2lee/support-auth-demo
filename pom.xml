@@ -55,7 +55,7 @@
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -83,7 +83,7 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -92,7 +92,7 @@
 					<warName>${project.name}</warName>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
@@ -100,7 +100,7 @@
 				<configuration>
 					<uriEncoding>UTF-8</uriEncoding>
 					<port>9091</port>
-          <path>/authdemo/v1</path>
+					<path>/authdemo/v1</path>
 				</configuration>
 			</plugin>
 		</plugins>
