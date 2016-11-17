@@ -17,12 +17,14 @@ public class AuthCenterClientTest {
 
 	@Test
 	public void test() {
+		String username = "283";
+		String password = "123";
+		
+		
 		String token="m9BICpac3bHIzAFhrbVyr1o95PtDOgsls+3YbS7AXPlZBhNAcNaDhQ==";
 		String ip="0:0:0:0:0:0:0:1";
-		String url = "http://127.0.0.1:9090/authcenter/v1/auth?token="+token+"&&ip="+ip;
+		String url = "http://127.0.0.1:9090/authcenter/api/v1/token?token="+token+"&&ip="+ip;
 		Map<String, String> vars = new HashMap<String, String>();
-		//vars.put("token", "m9BICpac3bHIzAFhrbVyr1o95PtDOgsl/9vHB/bNhbAHtCYNW2Hu9w==");
-		//vars.put("ip", "0:0:0:0:0:0:0:1");
 
 		RestTemplate restTemplate = new RestTemplate();
 
