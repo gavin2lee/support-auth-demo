@@ -30,7 +30,7 @@ public class LoginLogoutTest {
 		try{
 			subject.login(token);
 		}catch(AuthenticationException ae){
-			ae.printStackTrace();
+			Assert.fail(ae.getMessage());
 		}
 		
 		Assert.assertEquals(true, subject.isAuthenticated());
